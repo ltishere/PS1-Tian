@@ -1,50 +1,188 @@
 \section{Three connected research questions}
-Start from Intellectual Statement II. State the background, motivation, application, affected stakeholders, and strategic tension. Explain your proposal's relationship to a Nobel-recognized foundation and current research.
 
-\textbf{Q1---Economics:} [Which incentive, welfare, allocation, or institutional question needs an answer?]\par
-\textbf{Q2---Computation:} [Which model, algorithm, or evaluation makes the answer checkable?]\par
-\textbf{Q3---Behavior:} [Which belief, preference, reasoning limit, or learning mechanism could alter the prediction?]
+\textbf{Background.} Cooperation survives on little
+information~\cite{morozov2026,leung2026}, but both results assume the
+signal is authentic. Authorised push payment fraud breaks that. UK Finance
+reports \pounds576.4 million lost across 248{,}070 cases in
+2025~\cite{ukfinance2026}, and since 2024 the Payment Systems Regulator
+splits reimbursement between sending and receiving
+providers~\cite{psr2024}. The bank's only route to intent is the customer,
+whose answers the fraudster has scripted: she is a sincere reporter of a
+false belief, so a paid check returns text the adversary wrote.
 
-Explain why the answers depend on one another. Cite relevant economics, computer-science, and behavioral-science papers. Refer to Figure~\ref{fig:teaser} and explain how its mechanism connects your questions.
+\textbf{Stakeholders.} The payer reads friction as obstruction; the
+sending bank carries the complaints; the receiving bank holds the
+informative record; the regulator wants fewer losses without
+over-blocking. No actor's best choice is defined without the others', so
+protection stays low because no institution gains by moving first.
+
+\textbf{Nobel-recognised foundation.} Mechanism design---Hurwicz, Maskin
+and Myerson, 2007 Prize in Economic Sciences---asks what an institution
+can implement when agents report private
+information~\cite{myerson1981}. It assumes a reporter who knows her type
+and may misreport. Mine is sincere, does not know her type, and is
+scripted by the adversary being screened for.
+
+\textbf{Q1---Economics:} how should a verification budget be allocated
+when checking is costly, may be uninformative, and loses effectiveness
+with use? \textbf{Q2---Computation:} which mechanisms survive an adversary
+who scripts the reporting party? \textbf{Q3---Behavior:} is decay or
+authorship the binding constraint?
+
+\textbf{Integrated question.} The three describe one object: a budget that
+is scarce, depletes, and must be recomputed against a best-responding
+adversary. Alone each reverses the others---concentrating checks on
+high-value cases~\cite{benporath2014} is what a script targets, and an
+interface remedy for habituation~\cite{anderson2016} cannot reach an
+authored signal. Figure~\ref{fig:teaser} states what each discipline
+establishes.
 
 \section{Answer to Q1: incentives and intellectual lineage}
-State a provisional answer or falsifiable hypothesis. Define players, actions versus strategies, payoffs, timing, and information. Name the solution concept and cite its defining paper, such as Nash~\cite{nash1950} or Bayesian equilibrium~\cite{harsanyi1968}. State what the benchmark establishes and what it leaves unresolved. Distinguish hypothetical, observed, estimated, and inherited quantities.
+
+\textbf{Hypothesis.} A mechanism is \emph{coaching-proof} if its decision
+is invariant to everything the reporting party says within the episode.
+H1, falsifiable: no mechanism conditioning on within-episode testimony is
+coaching-proof, since a passing script always exists.
+
+\textbf{The game.} The fraudster chooses a script rate $s\in[0,1]$; the
+bank chooses a mechanism $m\in\{\text{pay},\text{testimony},
+\text{record},\text{hold}\}$ per episode---a mechanism, not a verdict,
+since the signal decides; the liability split is inherited from PSR
+practice. Information is incomplete in Harsanyi's
+sense~\cite{harsanyi1968}: the bank sees only the signal, the payer not
+even her own type. Bank payoffs are $-a$ for fraud paid,
+$-0.3a$ for a legitimate payment held, $+0.01a$ for one made, and 5 per
+record query. The solution concept is Bayesian Nash equilibrium.
+
+\textbf{Benchmark.} Ben-Porath, Dekel and Lipman~\cite{benporath2014}
+show that under costly but \emph{reliable} verification the optimal
+mechanism concentrates checking, which motivates indexing friction to a
+subset of counterparties. Unresolved: checks that are costly \emph{and}
+uninformative. Loss figures are observed, coefficients stipulated, the
+concentration result inherited.
 
 \section{Answer to Q2: method and evaluation}
-Explain the computational part of Figure~\ref{fig:teaser}: inputs, algorithm, baseline, metric, and a meaningful mathematical or computational check. Specify your smallest feasible experiment and one modification to the baseline. State the actual outputs obtained; label every untested outcome as expected or planned. Your Colab notebook and interactive game must explain the same research question and identify any differences in model or scope.
 
-\clearpage\balance
+\textbf{Inputs and algorithm.} Twelve episodes per round are drawn from a
+seeded sequence, each fraudulent with probability 0.25 and, if so,
+scripted with probability $s$. Testimony consumes one unit of a
+credibility stock of 12 that never refills, and an uncoached payer's
+chance of noticing falls with the stock. The record check flags a
+fraudulent payee with probability $p$, the cross-institution reporting
+rate, and a legitimate one with probability 0.05. Between rounds the
+fraudster raises $s$ in proportion to the testimony checks faced.
+
+\textbf{Baseline and modification.} The baseline sweeps $p$ from 0 to 1
+across 200 seeds; the metric is the pooled miss rate, fraud paid over
+fraud present. The modification switches habituation off and sweeps the
+script rate.
+
+\textbf{Obtained.} The miss rate tracks $1-p$ to within 0.032, so
+effectiveness is carried by participation, not software. Removing
+habituation lowers it from 0.638 to 0.237 at script rate 0, but at script
+rate 1 both reach 1.000: habituation is a degradation an interface could
+address, authorship a ceiling it cannot.
+
+\textbf{Check.} The notebook re-implements the game's pseudorandom
+generator bit-for-bit and reproduces three payoffs recorded by hand in the
+deployed game---$-6{,}775$, $-4{,}480$, $-2{,}005$---exactly, so the two
+artifacts are one model.
+
 \section{Answer to Q3: behavior and competing explanations}
-Identify a behavioral mechanism and a competing explanation. Describe evidence that would discriminate between them. Explain how this changes the economic model or computational design. State the limits of what the planned evidence can identify. Synthetic or simulated results do not establish human or real AI behavior. Include a feasible next test and what finding would change your mind.
 
+\textbf{Two explanations.} Anderson et al.~\cite{anderson2016} give
+physiological evidence that warnings habituate and propose an interface
+remedy. The competitor is authorship: the adversary wrote the answer, so
+it never conflicts however much attention it receives.
+
+\textbf{Discriminating evidence.} The two agree at low script rates and
+separate at high ones. The ablation is that test in simulation: the gap
+between curves is 0.401 at script rate 0 and 0.000 at script rate 1. The
+next test runs on people, varying warning novelty and script quality
+independently.
+
+\textbf{Limits.} If authorship binds, the bank buys nothing rather than
+noisy truth, so optimal allocation places no weight on testimony.
+Simulated results establish how the model behaves, not how people do. A
+testimony-based mechanism invariant to a passing script---reading latency
+rather than content---would falsify H1.
 
 \section{Advanced development and future directions}
-Build on a named Nobel laureate's defining work and cite the award record. Identify an enduring human question---such as cooperation, fairness, trust or collective choice---and explain what the foundation establishes. Add a relevant Turing Award foundation where it clarifies the computational lineage.
 
-Explain what is distinctive about today's environment and technology, what current research leaves unresolved, and how your proposal advances that boundary. State the economic, computational and behavioral contributions and the new insight their integration makes possible.
+\textbf{Foundations and boundary.} The enduring question is trust under
+adaptation: keeping exchange credible when those who exploit it adapt.
+Mechanism design (Nobel 2007) establishes what an institution can
+implement given what agents report~\cite{myerson1981}; interactive proof
+systems (Turing 2012)~\cite{goldwasser1989} are the same structure one
+level down, a verifier interrogating a possibly adversarial prover. What
+is distinctive now is that scripts are cheap and adaptive, so the
+reporting channel is adversarially controlled as routine. Current work
+treats this as detection; the boundary advanced here is design.
 
-\begin{table}[h]\caption{From laureate foundations to a new interdisciplinary contribution.}
-\begin{tabularx}{\columnwidth}{@{}p{1.6cm}Y@{}}\toprule
-\textbf{Horizon}&\textbf{Milestone and evidence}\\\midrule
-Foundation&[Laureate, defining work, enduring question and retained insight.]\\
-PS1&[Current-era setting, working baseline and meaningful check.]\\
-Next study&[New interdisciplinary explanation or design; a discriminating test.]\\
-Longer term&[Broader validation, benefits and reusable knowledge or tools.]\\
-2056&[Integrated contribution and evidence connecting it to the ambition below.]\\\bottomrule
-\end{tabularx}\end{table}
+\textbf{Contributions and governed risk.} Economics gains a
+costly-verification problem whose cost is a depleting stock, not a
+per-unit price; computation gains a decidable property and a recomputation
+requirement; behavioral science enters as mechanism state rather than
+interface design. Together they explain why mandated warnings keep
+expanding after being shown ineffective: their cost falls on a stock
+nobody accounts for. The risk to govern is guilt by association on records
+payees cannot contest; appeal, expiry and published group false-flag rates
+are conditions of the design.
 
-\noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
-By 2056, I aspire to be recognized for [theory, method or design] addressing [enduring human question] in [the current era's distinctive environment]. Building on [laureates and cited foundations], I will integrate [economics], [computer science] and [behavioral science] to advance [specific boundary]. Progress will be demonstrated by [milestones and evidence], with intellectual merits in [knowledge] and practical impacts for [people and institutions].
+\begin{table}[h]
+\caption{From laureate foundations to a new interdisciplinary contribution.}
+\label{tab:roadmap}
+\scriptsize
+\begin{tabularx}{\columnwidth}{@{}lY@{}}
+\toprule
+Horizon & Milestone and evidence \\
+\midrule
+Foundation & Mechanism design (Nobel 2007); interactive proofs (Turing 2012). \\
+PS1 & Seeded sweep and ablation; notebook reproduces the game's payoffs. \\
+Next study & Behavioral test separating habituation from authorship. \\
+Longer term & Payee-reporting protocol with appeal, expiry, false-flag rates. \\
+2056 & Coaching-proofness adopted as a verification standard. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
+\noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution
+statement.} By 2056, I aspire to be recognised for a testable criterion of
+coaching-proofness and a cross-institution protocol addressing trust under
+adaptation in an era when the reporting channel is routinely adversarially
+controlled. Building on mechanism design (Hurwicz, Maskin and Myerson,
+2007) and interactive proofs (Goldwasser and Micali, 2012), I will
+integrate an economics of depleting verification budgets, a computation of
+mechanisms recomputed against adaptive adversaries, and a behavioral
+account of habituation as mechanism state, to advance the boundary between
+detecting deception and designing against it. Progress will be shown by
+the milestones in Table~\ref{tab:roadmap}, with intellectual merits in
+what verification can conclude from an authored signal and practical
+impacts for payers least able to document themselves.
+
+{\small
 \subsection*{Open Science Statement}
-\textbf{GitHub:} \GitHubLink\\
-\textbf{Google Colab:} \ColabLink\par
-[Identify available code, data or synthetic inputs, notebook, dependencies, outputs, release/commit and actual reuse terms. Give the shortest reproducible run instruction.]
+\textbf{GitHub:} \url{https://github.com/ltishere/PS1-Tian}\quad
+\textbf{Colab:} \url{https://colab.research.google.com/github/ltishere/PS1-Tian/blob/main/notebook/coaching_proof_sweep.ipynb}\quad
+Commit \texttt{8172a7a}. Dependencies are NumPy and Matplotlib,
+preinstalled in Colab; no data is needed. Shortest run: open the Colab
+link, Runtime $\rightarrow$ Run all ($\approx$30~s). Stored outputs are
+the sweep, the ablation and the check reproducing $-6{,}775$, $-4{,}480$
+and $-2{,}005$. Reuse: MIT License.
 
 \subsection*{Statement of Contribution to the UN's SDGs}
-\textbf{Hugging Face:} \DemoLink\\
-Through an open-access [tool], this project aims to support \textbf{SDG 4---Quality Education}~\cite{sdg4} by helping [audience] learn [concept] through [interaction]. [State access needs, learning instructions and a feasible evaluation.] Distinguish the resource released from benefits that remain to be evaluated.
-
-\subsection*{Submission milestones}
-First draft: September 13, 2026, 11:00 P.M. Beijing time (UTC+8). Class review: September 14. Proposed: rebuttal September 16 and revised submission September 20, both at 11:00 P.M. Update Appendix~\ref{app:abstract} with each reflection and revision.
-
+\textbf{Hugging Face:}
+\url{https://dku-comsci-econ206-2026-tian-liang.static.hf.space/index.html}\quad
+This open-access browser game supports \textbf{SDG 4---Quality
+Education}~\cite{un2015sdg4} by helping undergraduates learn why a
+mechanism's effectiveness depends on who authored the signal it reads.
+The learner plays the bank, chooses a mechanism rather than a verdict, varies
+the reporting rate, and sees testimony checks drain a credibility stock
+while record checks do not. It needs only a browser, and a fixed seed lets
+an instructor set identical payments for a class. A feasible evaluation
+asks students to predict which mechanism survives a coached payer before
+and after play; the indicator is the change in correct
+\emph{justifications}. Whether it improves learning remains to be
+evaluated.
+\par}
+\balance
