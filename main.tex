@@ -3,6 +3,7 @@
 \setcopyright{none}
 \renewcommand\footnotetextcopyrightpermission[1]{}
 \usepackage{amsmath,tabularx,array,enumitem,balance}
+\usepackage{booktabs}
 \definecolor{CourseBlue}{HTML}{315EFB}
 \definecolor{CourseTeal}{HTML}{14877D}
 \hypersetup{colorlinks=true,linkcolor=CourseBlue,citecolor=CourseTeal,urlcolor=CourseTeal}
@@ -12,33 +13,30 @@
 \newcommand{\CourseName}{Computational Microeconomics}
 \newcommand{\CourseSession}{Autumn 2026 Session 1}
 \newcommand{\Instructor}{Luyao Zhang}
-\newcommand{\WorkshopSession}{[Your assigned workshop session]}
-% Replace these with YOUR fork/project URLs, not the instructor's template.
-\newcommand{\GitHubLink}{[Your project GitHub URL]}
+\newcommand{\WorkshopSession}{Session D: Strategic AI---Trust, Collusion, and Adaptation in Repeated Interactions}
+\newcommand{\GitHubLink}{\url{https://github.com/ltishere/PS1-Tian}}
 \newcommand{\TemplateRepository}{\url{https://github.com/sunshineluyao/ps1-overleaf-template}}
-\newcommand{\ColabLink}{[Insert verified Colab URL]}
-\newcommand{\DemoLink}{[Insert verified Hugging Face Space URL]}
+\newcommand{\ColabLink}{\url{https://colab.research.google.com/github/ltishere/PS1-Tian/blob/main/notebook/coaching_proof_sweep.ipynb}}
+\newcommand{\DemoLink}{\url{https://dku-comsci-econ206-2026-tian-liang.static.hf.space/index.html}}
 \newcommand{\coursemeta}{\noindent\textbf{Submission to:} \CourseNumber{} --- \CourseName.\\
 \textbf{Course session:} \CourseSession. \textbf{Workshop:} \WorkshopSession.\\
 \textbf{Instructor:} \Instructor. \textbf{Assignment:} PS1 research proposal.\par\smallskip}
-\title{[A Specific, Researchable Proposal Title]}
-\author{[Your Full Name]}
+\title{Indexing Verification: Mechanism Design When the Adversary Writes the Signal}
+\author{Tian Liang}
 \affiliation{\institution{Duke Kunshan University}\city{Kunshan}\country{China}}
-\email{[Your university email]}
-\renewcommand{\shortauthors}{[Your name]}
+\email{tl356@duke.edu}
+\renewcommand{\shortauthors}{Tian Liang}
 
 \begin{document}
 \begin{teaserfigure}
-\captionsetup{skip=8pt}
+\captionsetup{skip=6pt}
 \centering
-\includegraphics[width=\textwidth]{figures/ps1_teaser.pdf}
-\caption{Prospective research design adapted from the class proposal. Economic stochastic choice~\cite{rogers2009}, recursive LLM reasoning~\cite{zhang2025}, human reasoning levels~\cite{camerer2004} and persona audits~\cite{gupta2024} motivate a shared evaluation~\cite{jia2025}. Solid arrows within scenes show conceptual relations; dashed arrows show proposed synthesis. Estimated depth and precision are model-dependent, not direct observations of cognition.}
-\Description{Three disciplinary scenes contain a symbolic payoff matrix, successive belief levels, and a comparison of abstract personas. Dashed paths converge on a proposed evaluation of reasoning depth, decision precision and contextual sensitivity. All objects and text are editable in Draw.io.}
+\includegraphics[width=0.90\textwidth]{figures/ps1_teaser.pdf}
+\caption{\normalfont Three foundations and their proposed synthesis. Costly verification~\cite{benporath2014} concentrates checking; computed mechanisms~\cite{conitzer2002} must be recomputed as the adversary adapts; warnings habituate~\cite{anderson2016}. Dashed arrows mark the proposed synthesis. Grey panels report obtained simulation outputs; the orange dashed panel marks an anticipated result. Simulated results do not establish behaviour in real payment systems.}
+\Description{A three-column diagram. Each column names one discipline, its anchor paper, what that paper establishes about verification, and what this proposal advances. Dashed arrows from all three converge on a box reading coaching-proof verification, indexed on the counterparty's record rather than testimony. Inside that box, two grey panels report obtained simulation results and one orange dashed panel marks an anticipated result not yet obtained. All objects and text are editable in Draw.io.}
 \label{fig:teaser}
 \end{teaserfigure}
 \maketitle\raggedbottom\coursemeta
-
-\noindent\textcolor{CourseTeal}{\textbf{Template and illustrative figure.}} Adapt this class-example diagram and replace prompts with your own proposal. Fork the class repository and import your fork into Overleaf; see README for steps. Keep five numbered sections within two main pages, including metadata, Figure 1, its caption, and artifact links. Author Notes, references, and appendices follow on separate pages.
 
 \input{sections/proposal}
 \input{appendices/supporting}
